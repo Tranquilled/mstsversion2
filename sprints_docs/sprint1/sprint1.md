@@ -10,12 +10,10 @@ Features:
 0. Project Setup
 
 - Download and install necessary frameworks/technologies. Test that they are up and running. See list in main part of repository
-- Register for services (Disqus) and learn services
-- Take a SASS Tutorial 
 - Learn Disqus System
 - Run Hello World Setup
 
-Total Time: 16 hours
+Total Time: 10 hours
 
 
 1. Setup BlogAPI/Tables
