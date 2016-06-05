@@ -13,7 +13,7 @@ Features:
 - Learn Disqus System
 - Run Hello World Setup
 
-Total Time: 10 hours
+Total Time: 5 hours
 
 
 1. Setup BlogAPI/Tables
@@ -22,7 +22,7 @@ Total Time: 10 hours
         - Setup REST API Authentication  
         - Write Unit Tests for API
 
-    Total Time: 8 hours
+    Total Time: 5 hours
 
 
 2. Create Front End Interface for editing blog
@@ -30,7 +30,7 @@ Total Time: 10 hours
         - Add an Author, Position, Date Created, Date Modified
         - Use Journal template from bootstrap to create basic HTML templates. Integration design with SASS and JQuery.
 
-    Total Time: 8 hours
+    Total Time: 5 hours
 
 3. Create Front End Interface for seeing blog Posts:
 
@@ -41,4 +41,4 @@ Total Time: 10 hours
     - see blog post detail
     - Write comments and read comments using disqus system. 
 
-    Total Time: 8 hours
+    Total Time: 5 hours
