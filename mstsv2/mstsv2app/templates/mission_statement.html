@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block subtitle %} Mission Statement {% endblock %}
+
+
+{% block css %}
+<style type="text/css">
+.transition{
+    opacity:0;
+}
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container transition">
+    <div class="row">
+        <div id="main_title"><h1 class="page-header" style="display:inline">Mission Statement</h1></div>
+    </div>
+</div>
+<div class="container transition">
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-sm-12" id="videoplayer">
+        <iframe src="https://www.youtube.com/embed/G2Y9vb-7ZyM" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="{{ url_for('static',filename='js/jquery.transit.min.js')}}"></script>
+<script src="{{ url_for('static', filename='js/jquery.fitvids.js') }}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.transition').transition({opacity:1});
+     $("#videoplayer").fitVids();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block subtitle %} Homepage {% endblock %}
+
+{% block css %}
+<style type="text/css">
+.transition{
+    opacity:0;
+}
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container transition">
+    <div class="row">
+        <div id="main_title"><h1 class="page-header" style="display:inline"></h1></div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block js %}
+<script src="{{ url_for('static',filename='js/typed.js')}}"></script>
+<script src="{{ url_for('static',filename='js/jquery.transit.min.js')}}"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.transition').transition({opacity:1});
+    $('#main_title > .page-header').typed({
+        strings:["McGill Students Trading Society"],
+        typeSpeed: 0
+    });
+});
+</script>
+{% endblock %}

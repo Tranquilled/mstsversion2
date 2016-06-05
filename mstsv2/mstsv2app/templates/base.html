@@ -1,0 +1,58 @@
+
+<html>
+<head>
+	<title>MSTS - {% block subtitle %}Official Website{% endblock %}</title>
+
+
+	<link rel="shortcut icon" href="{{ url_for('static',filename='img/logo/trading_society_logo.ico')}}" />
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="css/bootstrap.min.css") }}" / >
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/base.css' )}}" />
+	{% block css %}
+	{% endblock %}
+</head>
+<body>
+	<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="{{ url_for('main.homepage') }}" class="navbar-brand">
+			  <div class="header-img"><img class="img-responsive logo-size"  src="{{ url_for('static',filename='img/logo/trading_society_logo.jpg') }}"></img></div>
+		  </a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+			  <li>
+                <a href="{{ url_for('main.mission_statement') }}">Mission Statement</a>
+              </li>
+			  <li>
+                <a href="">Resources</a>
+              </li>
+			  <li>
+                <a href="{{ url_for('blogs.blogs') }}">Blog</a>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+	<div class="container"><div class="row" style="height:100px;"></div></div>
+	{% block content %}
+	{% endblock %}
+
+
+
+
+
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
+
+	{% block js %}
+
+	{% endblock %}
+</body>
+
+</html>
