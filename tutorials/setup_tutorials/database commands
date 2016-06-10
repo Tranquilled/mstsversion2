@@ -1,0 +1,2 @@
+CREATE role olism with password '1234' CREATEDB LOGIN;
+CREATE database mstsdb3;

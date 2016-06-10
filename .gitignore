@@ -1,3 +1,5 @@
 venv
 *.pyc
 mstsv2/secret.py
+migrations
+migrations/*

@@ -23,6 +23,8 @@ class AcademicResourceList(Resource):
 			attributes = request_dict['data']['attributes']
 
 			academic_resource = AcademicResource(title = attributes['title'],
+												 category = attributes['category'],
+												 description = attributes['description'],
 												 url = attributes['url'])
 			db.session.add(academic_resource)
 			db.session.commit()
