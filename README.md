@@ -17,6 +17,4 @@ Technologies Used:
 5. JQuery
 6. SQLAlchemy 
 7. PostgreSQL
-8. Linux Ubuntu
-
 
