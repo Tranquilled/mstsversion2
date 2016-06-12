@@ -1,0 +1,14 @@
+Last Updated: June 12th, 2016 by Olivier Simard - Morissette
+
+
+This file contains a list of tasks that need to be done for the
+users module backend.
+
+
+- Create Resources Form / View
+- Create Category Form / View
+- Modify Resources Form / View
+- Modify Category Form / View
+- Delete Category Form / View
+- Filter Resources by Category
+- Have this form only seen by the admin (Feature needs to be created in the admin)

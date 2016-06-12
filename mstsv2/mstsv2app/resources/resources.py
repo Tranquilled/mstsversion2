@@ -30,7 +30,6 @@ class AcademicResourceList(Resource):
 			db.session.commit()
 
 			resource = AcademicResource.query.get(academic_resource.id)
-			print(resource)
 			result = academic_resource_schema.dump(resource).data
 			return result, 201
 
@@ -98,7 +97,7 @@ class AcademicResourceUpdate(Resource):
 			resp = make_response()
 			resp.status_code = 204
 			return resp
-			
+
 		except SQLAlchemyError as e:
 			db.session.rollback()
 			errors = {"error":str(e)}

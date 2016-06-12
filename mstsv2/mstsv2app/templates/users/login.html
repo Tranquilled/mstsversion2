@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% import 'users/render_field.html' as render_fields %}
+
+{% block subtitle %} Login {% endblock %}
+
+{% block css %}
+<style type="text/css">
+.transition{
+    opacity:0;
+}
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container transition">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div id="main_title"><h1 class="page-header" style="display:inline">Login</h1></div>
+      <br />
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form method='POST' action="{{ url_for('users.register') }}">
+            {{ form.hidden_tag() }}
+            <dl>
+              {{ render_fields.render_field(form.email) }}
+              {{ render_fields.render_field(form.password) }}
+              {{ render_fields.render_field(form.remember_me) }}
+              {{ render_fields.render_field(form.submit) }}
+            </dl>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+{% block js %}
+<script src="{{ url_for('static',filename='js/jquery.transit.min.js')}}"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.transition').transition({opacity:1});
+
+});
+</script>
+{% endblock %}

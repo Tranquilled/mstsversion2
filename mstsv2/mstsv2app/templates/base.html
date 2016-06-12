@@ -35,6 +35,21 @@
 			  			<li>
                 <a href="{{ url_for('blogs.blogs') }}">Blog</a>
               </li>
+							{% if current_user.is_authenticated %}
+							<li>
+								<a href="{{ url_for('users.logout') }}">Logout</a>
+							</li>
+							{% else %}
+							<li>
+								<a href="{{ url_for('users.register' )}}">Register</a>
+							</li>
+
+							<li>
+								<a href="{{ url_for('users.login' )}}">Login</a>
+							</li>
+
+
+							{% endif %}
           </ul>
         </div>
       </div>

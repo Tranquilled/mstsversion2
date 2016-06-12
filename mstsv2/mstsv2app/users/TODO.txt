@@ -1,0 +1,39 @@
+Last Updated: June 12th, 2016 by Olivier Simard - Morissette
+
+
+This file contains a list of tasks that need to be done for the
+users module backend.
+
+Email:
+- Create an email module for sending email
+
+- Creating confirmation email methods to ensure that the user email was valid.
+
+
+User Profiles/ Permission Levels:
+
+- Adding basic user avatars (with image)
+- Creating different user roles and levels (SuperAdmin,Admin, Student )
+  - Defining user permission levels
+
+
+- Password Account Management:
+  - Password Reset
+  - Password updates
+  - Email Address Changes
+
+
+- Integrating OAUTH
+  - Using Facebook Login to get all of the same information
+
+- Securing the Application:
+  - Securing the flask_restful api with user tokens which can be distributed by the superadmin
+
+- Edit Profiles:
+  - Add a field for a user avatar (gravitars)
+
+- Testing:
+  - Test different features, write a list of bugs and write further what needs to be completed
+    - User Login, User access to different forms based on login_required protecting view
+    - Test flask_restful api to determine if token auth is working
+    - Registration test with real email
