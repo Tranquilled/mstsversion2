@@ -1,0 +1,54 @@
+// Install PostgreSQL:
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib python-dev libpq-dev
+
+// Connect to Database:
+sudo su - postgres
+psql
+conninfo
+
+// Create Database and User:
+
+CREATE ROLE olism1 with password ‘1234’ CREATEDB LOGIN;
+
+SET ROLE olism1;
+
+CREATE DATABASE mstsdb;
+
+
+// Clone Repository
+
+git clone https://github.com/oliviersm199/mstsversion2
+
+cd mstsversion2
+
+// Setup Virtual Environment
+
+pip install virtualenv
+
+virtualenv venv
+
+source venv/bin/activate
+
+pip install -r requirements.txt
+
+// CREATE secret.py file with your local database username,passowrd and database name that you wrote above
+
+touch secret.py 
+
+// COPY THIS INTO touch.py with the corresponding username and password of the user in  the database
+
+SQLALCHEMY_DATABASE_URI =”postgresql://<usrname>:<pwd>@localhost/<dbname>"
+
+//Record migrations (changes to database)
+ 
+python mstsv2/run.py db init
+
+python mstsv2/run.py db migrate
+
+// Start web application
+
+python run.py runserver
+
+// Go check out the site at http://127.0.0.1:5000 in your browser
+
