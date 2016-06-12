@@ -8,7 +8,7 @@ import json
 path_to_settings =  os.path.dirname(
                     os.path.dirname(os.path.dirname(
                         os.path.dirname(os.path.abspath(__file__)))))
-print(path_to_settings)
+
 sys.path.append(path_to_settings)
 
 from settings import HOST, PORT
@@ -34,26 +34,28 @@ class ResourceTest(unittest.TestCase):
         self.assertEqual(200,r.status_code)
 
     def step_create_resource(self,):
-
-
         data = {"data":{"attributes":{"url":"http://google.com",
-                       "title":"world's best search engine"},
+                       "title":"Google",
+                       "category":"1",
+                       "description":"A great search engine."},
                        "headers":'text/json',
                        "type":"resource"}}
-        print(data)
-
         r = requests.post(resource_url,json=data)
+        print(r.text)
         self.assertEqual(r.status_code,201)
         return r.text
 
     def step_modify_resource(self,resourceid):
         resource_url_num = resource_url + "/" + str(resourceid)
         data = {"data":{"attributes":{"url":"http://www.bing.com",
-                       "title":"world's best search engine 2"},
+                       "title":"Bing",
+                       "category":"1",
+                       "description":"A great search engine too."},
                        "headers":'text/json',
                        "type":"resource"}}
 
         r = requests.put(resource_url_num,json=data)
+        print(r.text)
         self.assertEqual(200,r.status_code)
 
     def step_delete_resource(self,resourceid):

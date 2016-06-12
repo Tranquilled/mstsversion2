@@ -1,7 +1,6 @@
 from db import db
 from login import login_manager
 from flask import Flask
-from flask_wtf import CsrfProtect
 import os.path
 
 # Uses Blueprints to import different modules
@@ -25,10 +24,6 @@ def create_app():
 
     # initializing the login manager lazily
     login_manager.init_app(app)
-
-    # Initializing CSRF Protection for all views
-    csrf = CsrfProtect()
-    csrf.init_app(app)
 
     return app
 

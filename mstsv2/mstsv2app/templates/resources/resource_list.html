@@ -24,11 +24,14 @@
     <br />
     <div class="row">
       <div class="col-md-12">
-          <ul class="list-group">
-            {% for resource in resources %}
-              <li class="list-group-item"><a href="{{ resource.url }}">{{ resource.title }}</a></li>
+            {% for category in resources_by_category %}
+              <h2>{{ resources_by_category[category].category }}</h2>
+              <ul class="list-group">
+              {% for resource in resources_by_category[category].resources %}
+                <li class="list-group-item"><a href="{{ resource.url }}">{{ resource.title }}</a></li>
+              {% endfor %}
+              </ul>
             {% endfor %}
-          </ul>
       </div>
     </div>
 </div>

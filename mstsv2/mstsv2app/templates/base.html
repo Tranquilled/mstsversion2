@@ -30,27 +30,27 @@
                 <a href="{{ url_for('main.mission_statement') }}">Mission Statement</a>
               </li>
 			  			<li>
-                <a href="{{ url_for('resources.list') }}">Resources</a>
+                <a href="{{ url_for('resources.list_resources') }}">Resources</a>
               </li>
 			  			<li>
                 <a href="{{ url_for('blogs.blogs') }}">Blog</a>
               </li>
-							{% if current_user.is_authenticated %}
-							<li>
-								<a href="{{ url_for('users.logout') }}">Logout</a>
-							</li>
-							{% else %}
-							<li>
-								<a href="{{ url_for('users.register' )}}">Register</a>
-							</li>
-
-							<li>
-								<a href="{{ url_for('users.login' )}}">Login</a>
-							</li>
-
-
-							{% endif %}
           </ul>
+					<ul class="nav navbar-nav pull-right">
+						{% if current_user.is_authenticated %}
+						<li>
+							<a href="{{ url_for('users.logout') }}">Logout</a>
+						</li>
+						{% else %}
+						<li>
+							<a href="{{ url_for('users.register' )}}">Register</a>
+						</li>
+
+						<li>
+							<a href="{{ url_for('users.login' )}}">Login</a>
+						</li>
+						{% endif %}
+					</ul>
         </div>
       </div>
     </div>

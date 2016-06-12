@@ -1,7 +1,7 @@
-from flask_restful import Resource
+from flask_restful import Resource as RESTResource
 from flask import request, make_response, jsonify
-from models import AcademicResource
-from schemas import AcademicResourceSchema
+from models import Resource, Category
+from schemas import ResourceSchema, CategorySchema
 from sqlalchemy.exc import SQLAlchemyError
 from marshmallow import ValidationError
 from marshmallow_jsonapi.exceptions import IncorrectTypeError
@@ -9,11 +9,12 @@ from mstsv2app.db import db
 
 
 
-academic_resource_schema = AcademicResourceSchema()
+academic_resource_schema = ResourceSchema()
+category_schema = CategorySchema()
 
-class AcademicResourceList(Resource):
+class ResourceList(RESTResource):
 	def get(self):
-		query = AcademicResource.query.all()
+		query = Resource.query.all()
 		return academic_resource_schema.dump(query,many=True).data
 
 	def post(self):
@@ -22,14 +23,14 @@ class AcademicResourceList(Resource):
 			academic_resource_schema.validate(request_dict)
 			attributes = request_dict['data']['attributes']
 
-			academic_resource = AcademicResource(title = attributes['title'],
+			academic_resource = Resource(title = attributes['title'],
 												 category = attributes['category'],
 												 description = attributes['description'],
 												 url = attributes['url'])
 			db.session.add(academic_resource)
 			db.session.commit()
 
-			resource = AcademicResource.query.get(academic_resource.id)
+			resource = Resource.query.get(academic_resource.id)
 			result = academic_resource_schema.dump(resource).data
 			return result, 201
 
@@ -52,9 +53,9 @@ class AcademicResourceList(Resource):
 			resp.status_Code = 400
 			return resp
 
-class AcademicResourceUpdate(Resource):
+class ResourceUpdate(RESTResource):
 	def get(self,id):
-		resource = AcademicResource.query.get_or_404(id)
+		resource = Resource.query.get_or_404(id)
 		return academic_resource_schema.dump(resource).data
 
 	def put(self,id):
@@ -62,7 +63,7 @@ class AcademicResourceUpdate(Resource):
 		try:
 			academic_resource_schema.validate(request_dict)
 			attributes = request_dict['data']['attributes']
-			academic_resource = AcademicResource.query.get_or_404(id)
+			academic_resource = Resource.query.get_or_404(id)
 			for key,value in attributes.iteritems():
 				setattr(academic_resource,key,value)
 
@@ -91,8 +92,97 @@ class AcademicResourceUpdate(Resource):
 
 	def delete(self,id):
 		try:
-			academic_resource = AcademicResource.query.get_or_404(id)
+			academic_resource = Resource.query.get_or_404(id)
 			db.session.delete(academic_resource)
+			db.session.commit()
+			resp = make_response()
+			resp.status_code = 204
+			return resp
+
+		except SQLAlchemyError as e:
+			db.session.rollback()
+			errors = {"error":str(e)}
+			resp.status_code = 400
+			return resp
+
+
+class CategoryList(RESTResource):
+	def get(self):
+		query = Category.query.all()
+		return category_schema.dump(query,many=True).data
+
+	def post(self):
+		request_dict = request.get_json(force=True)
+		try:
+			category_schema.validate(request_dict)
+			attributes = request_dict['data']['attributes']
+			category = Category(name = attributes['name'])
+			db.session.add(category)
+			db.session.commit()
+			category = Category.query.get(category.id)
+			result = category_schema.dump(category).data
+			return result, 201
+
+		except SQLAlchemyError as e:
+			db.session.rollback()
+			errors = {"error":str(e)}
+			resp = make_response(jsonify(errors))
+			resp.status_code = 400
+			return resp
+
+		except ValidationError as e:
+			errors = {"error":str(e)}
+			resp = make_response(jsonify(errors))
+			resp.status_code = 400
+			return resp
+
+		except IncorrectTypeError as e:
+			errors = {"error":str(e)}
+			resp = make_response(jsonify(errors))
+			resp.status_Code = 400
+			return resp
+
+class CategoryUpdate(RESTResource):
+	def get(self,id):
+		resource = Category.query.get_or_404(id)
+		return category_schema.dump(resource).data
+
+	def put(self,id):
+		request_dict = request.get_json(force=True)
+		try:
+			category_schema.validate(request_dict)
+			attributes = request_dict['data']['attributes']
+			category = Category.query.get_or_404(id)
+			for key,value in attributes.iteritems():
+				setattr(category,key,value)
+
+			db.session.add(category)
+			db.session.commit()
+			return category_schema.dump(category).data, 200
+
+		except SQLAlchemyError as e:
+			db.session.rollback()
+			errors = {"error":str(e)}
+			resp = make_response(jsonify(errors))
+			resp.status_code = 400
+			return resp
+
+		except ValidationError as e:
+			errors = {"error":str(e)}
+			resp = make_response(jsonify(errors))
+			resp.status_code = 400
+			return resp
+
+		except IncorrectTypeError as e:
+			errors = {"error":str(e)}
+			resp = make_response(jsonify(errors))
+			resp.status_Code = 400
+			return resp
+
+	def delete(self,id):
+		try:
+			category = Category.query.get_or_404(id)
+			db.session.delete(category)
 			db.session.commit()
 			resp = make_response()
 			resp.status_code = 204
