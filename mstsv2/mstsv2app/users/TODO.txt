@@ -28,6 +28,7 @@ User Profiles/ Permission Levels:
 
 - Securing the Application:
   - Securing the flask_restful api with user tokens which can be distributed by the superadmin
+  - More to come on this later
 
 - Edit Profiles:
   - Add a field for a user avatar (gravitars)
