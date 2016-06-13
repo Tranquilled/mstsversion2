@@ -1,3 +1,26 @@
+'''
+The following module implements a REST API for resources. This allows
+us to manipulate our database using simple HTTP requests and without
+having to go through a form. This may be useful in the future if we
+are looking to have a mobile app or add an analytics application that is
+separate from the main site.
+
+The basic structure of the REST API for one particular table is as follows:
+
+ResourcesList(self):
+	- GET -> Get all Resources
+	- POST - > Create a Resource
+ResourcesUpdate
+	- PUT -> Modify a Resource
+	- DELETE -> Delete a Resource
+
+There implementations are below. Schemas from the schema file are used
+to filter data. Models are used to interact with the database.
+
+'''
+
+
+
 from flask_restful import Resource as RESTResource
 from flask import request, make_response, jsonify
 from models import Resource, Category
@@ -8,9 +31,12 @@ from marshmallow_jsonapi.exceptions import IncorrectTypeError
 from mstsv2app.db import db
 
 
-
+# Initializing an instance of the schema to use for filtering incoming and outgoing
+# data of the API
 academic_resource_schema = ResourceSchema()
 category_schema = CategorySchema()
+
+
 
 class ResourceList(RESTResource):
 	def get(self):
@@ -20,16 +46,21 @@ class ResourceList(RESTResource):
 	def post(self):
 		request_dict = request.get_json(force=True)
 		try:
+			# parsing JSON Request
 			academic_resource_schema.validate(request_dict)
 			attributes = request_dict['data']['attributes']
 
+
+			# saving into database
 			academic_resource = Resource(title = attributes['title'],
-												 category = attributes['category'],
-												 description = attributes['description'],
-												 url = attributes['url'])
+										 category = attributes['category'],
+										 description = attributes['description'],
+										 url = attributes['url'])
+
 			db.session.add(academic_resource)
 			db.session.commit()
 
+			# getting the resource that was just saved and filtering it to ensure consistency
 			resource = Resource.query.get(academic_resource.id)
 			result = academic_resource_schema.dump(resource).data
 			return result, 201
