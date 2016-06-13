@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{# This is a comment in the jinja templating language #}
+
+{# The first line of this document shows how to extend another template. This is similar to object-oriented programming concept of inheritance. #}
+{# When we inherit from another template, we can fill out the blocks that the template we inherited from had. If we don't fill it out, it defaults to the previous page #}
+
+
+
+{% block content %}
+
+{# example of a for loop in jinja, creating a nice list #}
+{% for food in favorite_foods %}
+	{# Example of capitalization, there are many other ones besides capitalize that you can use to render strings. #}
+	<li>{{ food|capitalize }}</li>
+{% endfor %}
+
+{# Example of an if statement #}
+{% if flask_is_fun %}
+<a href="{{ flask_doc_url }}">Flask Documentation </a>
+{% endif %}
+
+
+{# Example of if else statement #}
+{% if montreal_is_warm %}
+<h1>You are right </h1>
+{% else %}
+<h1>NOO MONTREAL IS FREEZING </h1>
+{% endif %}
+
+<ul>
+<li><a href="{{ jinja_doc_url }}"> Jinja Documentation </a></li>
+<li><a href="{{ flask_doc_url }}"> Flask Documentation </a></li>
+<li><a href="{{ tutorial }}"> Jinja Tutorial </a></li>
+</ul>
+
+{% endblock  %}
+
+

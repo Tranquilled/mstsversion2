@@ -3,7 +3,7 @@
 Contains development settings for project
 
 '''
-from secret import SQLALCHEMY_DATABASE_URI, WTF_CSRF_SECRET_KEY, SECRET_KEY
+from secret import SQLALCHEMY_DATABASE_URI 
 
 DEBUG = True
 
@@ -13,3 +13,9 @@ PORT = 5000
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI
+
+# change before production
+WTF_CSRF_SECRET_KEY = 'aksdfasdfiqwpoerias;fialsdkfla;skdfl;askdlfasd'
+
+SECRET_KEY = 'alskdfaskdfpaskdfl;aksdfopaksdfopawefaposdkfapsodkfasdf'
+
