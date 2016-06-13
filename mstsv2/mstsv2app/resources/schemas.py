@@ -1,3 +1,10 @@
+'''
+Similar to your forms, your schemas validate data coming in. They also can be
+used to validate outgoing data and are particularly useful in ensuring
+that your REST API provides a consistent presentation of the data.
+
+'''
+
 from marshmallow_jsonapi import Schema, fields
 
 class ResourceSchema(Schema):

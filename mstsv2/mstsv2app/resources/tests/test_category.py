@@ -5,6 +5,11 @@ import os
 import sys
 import json
 
+
+
+# Getting the path to the settings file and importing it so the HOST
+# and the PORT are known.
+
 path_to_settings =  os.path.dirname(
                     os.path.dirname(os.path.dirname(
                         os.path.dirname(os.path.abspath(__file__)))))
@@ -13,8 +18,9 @@ sys.path.append(path_to_settings)
 
 from settings import HOST, PORT
 
-base_url = 'http://%s:%s'%(HOST,PORT)
 
+# Getting our test URL
+base_url = 'http://%s:%s'%(HOST,PORT)
 category_url = base_url + '/' + 'resources' + '/' + 'categories'
 
 class CategoryTest(unittest.TestCase):
@@ -58,9 +64,7 @@ class CategoryTest(unittest.TestCase):
         r = requests.delete(category_url_num)
 
         self.assertEqual(204,r.status_code)
-
-
-
+        
 
 
     def test_categories(self,):

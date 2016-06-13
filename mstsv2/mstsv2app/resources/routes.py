@@ -4,7 +4,10 @@ from resources import ResourceList, ResourceUpdate
 from resources import CategoryList, CategoryUpdate
 from views import list_resources
 
-
+# Blueprint aids in creating a modular application. This blueprint can be
+# imported and added to our main app so all of the resources and url rules
+# listed in here can be used in the entire application.
+# This allows for a modular design.
 resources_blueprint = Blueprint('resources',__name__)
 
 resource_api = Api(resources_blueprint)
