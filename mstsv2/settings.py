@@ -19,3 +19,5 @@ WTF_CSRF_SECRET_KEY = 'aksdfasdfiqwpoerias;fialsdkfla;skdfl;askdlfasd'
 
 SECRET_KEY = 'alskdfaskdfpaskdfl;aksdfopaksdfopawefaposdkfapsodkfasdf'
 
+
+
