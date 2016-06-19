@@ -21,5 +21,5 @@ users_api.add_resource(UserVerify,'/verify')
 
 # Views import
 users_blueprint.add_url_rule('/login',view_func=login,methods=['POST','GET'])
-users_blueprint.add_url_rule('/logout',view_func=logout,methods=['POST'])
+users_blueprint.add_url_rule('/logout',view_func=logout,methods=['POST','GET'])
 users_blueprint.add_url_rule('/register',view_func=register,methods=['POST','GET'])

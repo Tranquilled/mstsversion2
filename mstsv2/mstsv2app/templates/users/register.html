@@ -21,7 +21,7 @@
       <br />
       <div class="panel panel-default">
         <div class="panel-body">
-          <form method='POST' action="{{ url_for('users.login') }}">
+          <form method='POST' action="{{ url_for('users.register') }}">
             {{ form.hidden_tag() }}
             <dl>
               {{ render_fields.render_field(form.email) }}

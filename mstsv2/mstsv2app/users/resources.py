@@ -26,6 +26,7 @@ class UserList(Resource):
 
 			user = User(
                         email = attributes['email'],
+						verified = False,
 						first_name = attributes['first_name'],
 						last_name = attributes['last_name'],
 						password_hash = attributes['password'],

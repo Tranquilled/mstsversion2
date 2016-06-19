@@ -35,6 +35,7 @@ class UserVerifySchema(Schema):
 	email = fields.String(load_only=True)
 	password = fields.String(load_only=True)
 	result = fields.Bool(dump_only=True)
+	
 	class Meta:
 		type_ = "userverify"
 		strict = True
