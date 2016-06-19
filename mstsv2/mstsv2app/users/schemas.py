@@ -13,6 +13,11 @@ class UserSchema(Schema):
 	email = fields.String(required=True,validate=[Length(min=1,max=64,
 	error=err_length_msg%('Email'))])
 
+	verified = fields.Boolean(required=True)
+
+	verification_code = fields.String(required=True,validate=[Length(min=1,max=64,
+	error=err_length_msg%('Verification Code'))])
+
 	first_name = fields.String(required=True,validate=[Length(min=1,max=64,
 	error=err_length_msg%('First name'))])
 
@@ -35,7 +40,7 @@ class UserVerifySchema(Schema):
 	email = fields.String(load_only=True)
 	password = fields.String(load_only=True)
 	result = fields.Bool(dump_only=True)
-	
+
 	class Meta:
 		type_ = "userverify"
 		strict = True
