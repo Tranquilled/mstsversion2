@@ -1,5 +1,6 @@
 from flask import render_template, flash, request,redirect, url_for
 from flask_login import login_user,logout_user, login_required, current_user
+from flask_mail import Message
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from models import User, TYPES, db
 from forms import LoginForm, RegistrationForm
@@ -42,6 +43,14 @@ def register():
                     role = TYPES[0][0]) # Get the User Type by Default
         db.session.add(user)
         db.session.commit()
+
+        msg = Message('Welcome to MSTS',
+                      sender="from@example.com",
+                      recipients=[form.email.data],
+                      )
+        msg.html = render_template('registration_email.html',
+                                    verification_code = verification_code)
+
         flash('Successful registration. Please validate your email before logging in.')
         return redirect(url_for('users.login'))
     return render_template('users/register.html',form=form)
