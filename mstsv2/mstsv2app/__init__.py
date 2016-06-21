@@ -1,7 +1,7 @@
 from db import db
 from login import login_manager
 from flask import Flask
-from flask_mail import Mail
+from mail import mail
 import os.path
 
 # Uses Blueprints to import different modules
@@ -15,7 +15,7 @@ def create_app():
     app.config.from_object('settings')
 
     # Creating the mail object to manage emails in flask
-    mail = Mail(app)
+    mail.init_app(app)
 
 
 

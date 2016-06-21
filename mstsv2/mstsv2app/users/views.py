@@ -1,6 +1,6 @@
 from flask import render_template, flash, request,redirect, url_for
 from flask_login import login_user,logout_user, login_required, current_user
-from flask_mail import Message
+from mstsv2app.mail import mail
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from models import User, TYPES, db
 from forms import LoginForm, RegistrationForm
@@ -50,6 +50,7 @@ def register():
                       )
         msg.html = render_template('registration_email.html',
                                     verification_code = verification_code)
+        mail.send(msg)
 
         flash('Successful registration. Please validate your email before logging in.')
         return redirect(url_for('users.login'))
