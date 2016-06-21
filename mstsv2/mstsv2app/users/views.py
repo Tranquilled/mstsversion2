@@ -61,6 +61,13 @@ def register():
         return redirect(url_for('users.login'))
     return render_template('users/register.html',form=form)
 
+@login_required
+def account_settings():
+    user = User(current_user)
+    registration_form = RegistrationForm(email=user.email)
+    return render_template('users/account_settings.html',registration_form = registration_form)
+
+
 
 def verify_account(verification_code):
     try:
