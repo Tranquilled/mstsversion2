@@ -15,12 +15,11 @@ user_schema = UserSchema()
 user_verify_schema = UserVerifySchema()
 
 class UserList(Resource):
-	@login_required
 	def get(self):
 		query = User.query.all()
 		return user_schema.dump(query,many=True).data
 
-	@login_required
+
 	def post(self):
 		request_dict = request.get_json(force=True)
 		try:
@@ -64,12 +63,12 @@ class UserList(Resource):
 
 class UserUpdate(Resource):
 
-	@login_required
+
 	def get(self,id):
 		resource = User.query.get_or_404(id)
 		return user_schema.dump(resource).data
 
-	@login_required
+
 	def put(self,id):
 		request_dict = request.get_json(force=True)
 		try:
@@ -102,7 +101,6 @@ class UserUpdate(Resource):
 			resp.status_Code = 400
 			return resp
 
-	@login_required
 	def delete(self,id):
 		try:
 			user = User.query.get_or_404(id)
@@ -119,7 +117,6 @@ class UserUpdate(Resource):
 			return resp
 
 class UserVerify(Resource):
-	@login_required
 	def post(self):
 		request_dict = request.get_json(force=True)
 		try:
