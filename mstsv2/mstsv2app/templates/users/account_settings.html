@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block subtitle %} Login {% endblock %}
+
+{% block css %}
+<style type="text/css">
+.transition{
+    opacity:0;
+}
+.btn-msts{
+  background:rgb(111, 194, 150);
+}
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container transition">
+  <div id="main_title"><h1 class="page-header" style="display:inline">Settings</h1></div>
+  <br />
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+    <li role="presentation"><a href="#delete_account" aria-controls="profile" role="tab" data-toggle="tab">Delete Account</a></li>
+  </ul>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="settings">
+      <br />
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <br />
+              <h2>User Settings</h2>
+              <form method='POST' action="{{ url_for('users.register') }}">
+                {{ form.hidden_tag() }}
+                <label>{{ form.email.label }}</label>
+                {{ form.email(class="form-control") }}
+                <br />
+                <label>{{ form.password.label }}</label>
+                {{ form.password(class="form-control") }}
+                <br />
+                <label>{{ form.password_confirmation.label }} </label>
+                {{ form.password_confirmation(class="form-control") }}
+                <br />
+                <input class="btn btn-msts" type="submit" value="Save" />
+              </form>
+        </div>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="delete_account">
+      <h2></h2>
+      <p>
+        Delete all information relating to your account. We will not be able to retrieve
+        your information.
+      </p>
+      <form method="POST" onclick="return confirm('Are you sure you want to delete your account?')" action="">
+        <input type="submit" class="btn btn-danger" />
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+{% block js %}
+<script src="{{ url_for('static',filename='js/jquery.transit.min.js')}}"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.transition').transition({opacity:1});
+
+});
+</script>
+{% endblock %}

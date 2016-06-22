@@ -19,3 +19,10 @@ class RegistrationForm(Form):
     def validate_email(self,field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('Email already registered')
+
+class SettingsForm(Form):
+    email = StringField('Email',validators=[Required(), Length(1,64),Email()])
+    password = PasswordField('Password',validators=[EqualTo('password_confirmation',
+    message="Passwords must match")])
+    password_confirmation = PasswordField('Confirm Password')
+    submit = SubmitField('Register')

@@ -1,16 +1,19 @@
 from flask import render_template, flash, request,redirect, url_for
-from flask_login import login_user,logout_user, login_required, current_user
+from flask_login import login_user,logout_user, login_required, current_user, fresh_login_required
 from flask_mail import Message
 from mstsv2app.mail import mail
+from mstsv2app.tools.error_reporting import flash_errors
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from models import User, TYPES, db
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, SettingsForm
 import random
 import string
 import socket
 
 def login():
-    form = LoginForm()
+    if current_user.is_authenticated:
+        return redirect(url_for('main.homepage'))
+    form = LoginForm(request.form)
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
@@ -24,6 +27,23 @@ def login():
 
     return render_template('users/login.html',form=form)
 
+def reauthenticate():
+    form = LoginForm(request.form)
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is not None and user.verify_password(form.password.data):
+            if user.verified:
+                login_user(user,remember=form.remember_me.data)
+                return redirect(request.args.get('next') or url_for('main.homepage'))
+            else:
+                flash('Please verify your email address before logging in.','alert-danger')
+        else:
+            flash('Invalid username or password.','alert-danger')
+
+    return render_template('users/login.html',form=form)
+
+
+
 @login_required
 def logout():
     logout_user()
@@ -32,6 +52,8 @@ def logout():
 
 
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.homepage'))
     form = RegistrationForm(request.form)
     if form.validate_on_submit():
         verification_code = ''.join([ random.choice(
@@ -62,10 +84,18 @@ def register():
     return render_template('users/register.html',form=form)
 
 @login_required
+@fresh_login_required
 def account_settings():
-    user = User(current_user)
-    registration_form = RegistrationForm(email=user.email)
-    return render_template('users/account_settings.html',registration_form = registration_form)
+    form = SettingsForm(request.form)
+    if form.validate_on_submit():
+        current_user.email = form.email.data
+        if form.email.password:
+            current_user.password = form.email.password
+
+        db.session.add(current_user)
+        db.session.commit()
+    flash_errors(form)
+    return render_template('users/account_settings.html',form =form)
 
 
 
