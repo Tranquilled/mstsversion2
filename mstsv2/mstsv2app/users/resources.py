@@ -62,8 +62,6 @@ class UserList(Resource):
 			return resp
 
 class UserUpdate(Resource):
-
-
 	def get(self,id):
 		resource = User.query.get_or_404(id)
 		return user_schema.dump(resource).data

@@ -1,6 +1,7 @@
 from db import db
 from login import login_manager
 from flask import Flask
+from flask_gravatar import Gravatar
 from mail import mail
 import os.path
 
@@ -17,10 +18,18 @@ def create_app():
     # Creating the mail object to manage emails in flask
     mail.init_app(app)
 
-
-
     # initializing the database lazily
     db.init_app(app)
+
+    # initializing gravatars
+    gravatar = Gravatar(app,
+                    size=100,
+                    rating='g',
+                    default='retro',
+                    force_default=False,
+                    force_lower=False,
+                    use_ssl=False,
+                    base_url=None)
 
     # registering the different modules in the application
     app.register_blueprint(blogs_blueprint,url_prefix='/blogs')

@@ -89,14 +89,32 @@ def account_settings():
     form = SettingsForm(request.form)
     if form.validate_on_submit():
         current_user.email = form.email.data
-        if form.email.password:
-            current_user.password = form.email.password
+        if form.password.data:
+            current_user.password = form.password.data
+
+        flash("Settings Updated")
 
         db.session.add(current_user)
         db.session.commit()
+
+    form.email.data = current_user.email
+
     flash_errors(form)
     return render_template('users/account_settings.html',form =form)
 
+@login_required
+@fresh_login_required
+def delete_account():
+    user_id = current_user.id
+    user = User.query.get(user_id)
+    logout_user()
+    db.session.delete(user)
+    db.session.commit()
+    flash("Account Successfully deleted. We hope to see you again soon!")
+
+    # may have to refactor and send an email when an account gets deleted
+
+    return redirect(url_for("main.homepage"))
 
 
 def verify_account(verification_code):
@@ -114,3 +132,6 @@ def verify_account(verification_code):
 
     flash("Thank you for verifying your account, you may now login.")
     return redirect(url_for('users.login'))
+
+def forgot_password():
+    pass

@@ -20,18 +20,40 @@
   <div id="main_title"><h1 class="page-header" style="display:inline">Settings</h1></div>
   <br />
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+    <li role="presentation" class="active"><a href="#account_info" aria-controls="account_info" role="tab" data-toggle="tab">Account Info</a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
     <li role="presentation"><a href="#delete_account" aria-controls="profile" role="tab" data-toggle="tab">Delete Account</a></li>
   </ul>
   <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="settings">
+    <div role="tabpanel" class="tab-pane active" id="account_info">
+      <br />
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <br />
+              <h2>Account Information</h2>
+              <table class="table table-responsive">
+                <tbody>
+                  <tr>
+                    <td>Account Status</td>
+                    <td>{{ current_user.role }}</td>
+                  </tr>
+                  <tr>
+                    <td>Auto Generated Avatar</td>
+                    <td><img src="{{ current_user.email|gravatar }}"></img></td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="settings">
       <br />
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
           <br />
               <h2>User Settings</h2>
-              <form method='POST' action="{{ url_for('users.register') }}">
+              <form method='POST' action="{{ url_for('users.account_settings') }}">
                 {{ form.hidden_tag() }}
                 <label>{{ form.email.label }}</label>
                 {{ form.email(class="form-control") }}
@@ -53,7 +75,7 @@
         Delete all information relating to your account. We will not be able to retrieve
         your information.
       </p>
-      <form method="POST" onclick="return confirm('Are you sure you want to delete your account?')" action="">
+      <form method="POST" onclick="return confirm('Are you sure you want to delete your account?')" action="{{ url_for('users.delete_account') }}">
         <input type="submit" class="btn btn-danger" />
       </form>
     </div>

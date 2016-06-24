@@ -2,7 +2,8 @@ from flask import Blueprint
 from flask_restful import Api
 from resources import UserList, UserUpdate, UserVerify
 
-from views import login, logout, register, verify_account, account_settings, reauthenticate
+from views import login, logout, register, verify_account, account_settings
+from views import reauthenticate, delete_account
 
 
 users_blueprint = Blueprint('users',__name__)
@@ -27,3 +28,4 @@ users_blueprint.add_url_rule('/reauthenticate',view_func=reauthenticate,methods=
 users_blueprint.add_url_rule('/register',view_func=register,methods=['POST','GET'])
 users_blueprint.add_url_rule('/register/verify/<verification_code>',view_func=verify_account,methods=['GET'])
 users_blueprint.add_url_rule('/account/settings',view_func=account_settings,methods=['GET','POST'])
+users_blueprint.add_url_rule('/account/settings/delete',view_func=delete_account,methods=['POST'])

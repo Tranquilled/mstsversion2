@@ -27,7 +27,7 @@ class UserSchema(Schema):
 	password = fields.String(load_only=True, validate=[Length(min=1,max=64,
 	error=err_length_msg%('Password'))])
 
-	role_id = fields.Integer(required=True)
+	role = fields.String(required=True)
 	password_hash = fields.String(dump_only=True)
 
 	class Meta:
