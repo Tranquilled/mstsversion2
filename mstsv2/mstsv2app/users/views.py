@@ -139,6 +139,7 @@ def forgot_password():
         # generating a random token to send to the user email
         user_email = form.email.data
         try:
+            print("here")
             user = User.query.filter_by(email=user_email).one()
             verification_code = verification_code = ''.join([ random.choice(
                                     string.ascii_uppercase +
@@ -162,5 +163,6 @@ def forgot_password():
             pass
 
 
-        flash("If this email address has a registered account, we have sent an email with instructions on how to recover your account.")
+        flash("If this email address has a registered account, we have sent an email with instructions on how to recover your account.","alert-success")
+    print(form.errors)
     return render_template('users/forgot_password.html',form=form)

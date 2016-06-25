@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% import 'users/render_field.html' as render_fields %}
+{% from 'render_field.html' import render_field_errors %}
 
 {% block subtitle %} Login {% endblock %}
 
@@ -22,13 +22,21 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <form method='POST' action="{{ url_for('users.register') }}">
-            {{ form.hidden_tag() }}
-            <dl>
-              {{ render_fields.render_field(form.email) }}
-              {{ render_fields.render_field(form.password) }}
-              {{ render_fields.render_field(form.password_confirmation)}}
-              {{ render_fields.render_field(form.submit) }}
-            </dl>
+              {{ form.hidden_tag() }}
+
+              <label>{{ form.email.label }}</label>
+              {{ render_field_errors(form.email) }}
+              {{ form.email(class='form-control') }}
+              <br />
+              <label>{{ form.password.label }}</label>
+              {{ render_field_errors(form.password) }}
+              {{ form.password(class='form-control') }}
+              <br />
+              <label>{{ form.password_confirmation.label }}</label>
+              {{ render_field_errors(form.password_confirmation) }}
+              {{ form.password_confirmation(class='form-control')}}
+              <br />
+              {{ form.submit(class='btn btn-default') }}
           </form>
         </div>
       </div>
