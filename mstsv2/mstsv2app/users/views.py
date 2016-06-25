@@ -5,7 +5,7 @@ from mstsv2app.mail import mail
 from mstsv2app.tools.error_reporting import flash_errors
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from models import User, TYPES, db
-from forms import LoginForm, RegistrationForm, SettingsForm
+from forms import LoginForm, RegistrationForm, SettingsForm, ForgotPasswordForm
 import random
 import string
 import socket
@@ -134,4 +134,33 @@ def verify_account(verification_code):
     return redirect(url_for('users.login'))
 
 def forgot_password():
-    pass
+    form = ForgotPasswordForm(request.form)
+    if form.validate_on_submit():
+        # generating a random token to send to the user email
+        user_email = form.email.data
+        try:
+            user = User.query.filter_by(email=user_email).one()
+            verification_code = verification_code = ''.join([ random.choice(
+                                    string.ascii_uppercase +
+                                    string.ascii_lowercase +
+                                    string.digits) for _ in range(1,48) ])
+
+
+            msg = Message('MSTS Password Reset',
+                              sender="from@example.com",
+                              recipients=[user_email],
+                              )
+            msg.html = render_template('users/forgot_password_email.html',verification_code = verification_code)
+            try:
+                mail.send(msg)
+            except socket.error as e:
+                print("Message not successfully sent")
+
+        except MultipleResultsFound as e:
+            pass
+        except NoResultFound as e:
+            pass
+
+
+        flash("If this email address has a registered account, we have sent an email with instructions on how to recover your account.")
+    return render_template('users/forgot_password.html',form=form)

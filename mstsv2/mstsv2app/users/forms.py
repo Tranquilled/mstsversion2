@@ -33,3 +33,7 @@ class SettingsForm(Form):
             print(user.email)
             if field.data != user.email:
                 raise ValidationError('Email already registered')
+
+class ForgotPasswordForm(Form):
+    email = StringField('Email',validators =[Required(),Length(1,64),Email()])
+    submit = SubmitField('Register')

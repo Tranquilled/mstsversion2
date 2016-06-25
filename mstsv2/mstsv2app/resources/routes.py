@@ -14,11 +14,11 @@ resource_api = Api(resources_blueprint)
 
 
 # REST API Component
-resource_api.add_resource(ResourceList,'')
-resource_api.add_resource(ResourceUpdate,'/<int:id>')
-resource_api.add_resource(CategoryList,'/categories')
-resource_api.add_resource(CategoryUpdate,'/categories/<int:id>')
+resource_api.add_resource(ResourceList,'/api')
+resource_api.add_resource(ResourceUpdate,'/api/<int:id>')
+resource_api.add_resource(CategoryList,'/api/categories')
+resource_api.add_resource(CategoryUpdate,'/api/categories/<int:id>')
 
 
 # Template Views
-resources_blueprint.add_url_rule('/list/',view_func=list_resources)
+resources_blueprint.add_url_rule('',view_func=list_resources)
