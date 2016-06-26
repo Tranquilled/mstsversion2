@@ -10,13 +10,13 @@ Email:
 
 User Profiles/ Permission Levels:
 
-- Adding basic user avatars (with image)
-- Creating different user roles and levels (SuperAdmin,Admin, Student )
-  - Defining user permission levels
+- CHECK Adding basic user avatars (with image)
+- CHECK Creating different user roles and levels (SuperAdmin,Admin, Student )
+  - CHECK Defining user permission levels
 
 
-- Password Account Management:
-  - Password Reset
+- CHECK Password Account Management:
+  - CHECK Password Reset
   - CHECK Password updates
   - CHECK Email Address Changes
 

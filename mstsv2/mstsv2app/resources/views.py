@@ -1,9 +1,9 @@
-from models import Resource, Category
-from flask import render_template, jsonify
+from models import Resource, Category, db
+from flask import render_template, jsonify, redirect,url_for, request, flash
+from flask_login import current_user, login_required
+from forms import ResourceForm, CategoryForm
 
 def list_resources():
-
-
     # getting all of the categories
     categories = Category.query.all()
 
@@ -15,7 +15,7 @@ def list_resources():
 
 
     # getting all of the academic resources and sorting them into a dictionary
-    # so the attributes can be easily presented in the Jinja template. 
+    # so the attributes can be easily presented in the Jinja template.
     academic_resources = Resource.query.all()
 
     for academic_resource in academic_resources:
@@ -25,6 +25,41 @@ def list_resources():
                 "url":academic_resource.url,
                 "description":academic_resource.description
             })
-
-
     return render_template('resources/resource_list.html',resources_by_category=categories_display)
+
+@login_required
+def add_resource():
+    # if not (current_user.is_admin() or current_user.is_superadmin()):
+        # return redirect(url_for('main.homepage'))
+
+    form = ResourceForm(request.form)
+    
+    # Categories
+    categories = Category.query.all()
+    cat_choices = [ (category.id,category.name) for category in categories]
+    form.category.choices = cat_choices
+
+    if form.validate_on_submit():
+        new_resource = Resource(title=form.title.data,
+                                category=form.category.data,
+                                description=form.description.data,
+                                url=form.url.data)
+        db.session.add(new_resource)
+        db.session.commit()
+        flash('Resource was successfully added.','alert-success')
+
+    return render_template('resources/add_resource.html',form=form)
+
+@login_required
+def add_category():
+    # if not (current_user.is_admin() or current_user.is_superadmin()):
+    #     return redirect(url_for('main.homepage'))
+
+    form = CategoryForm(request.form)
+    if form.validate_on_submit():
+        new_category = Category(name=form.name.data)
+        db.session.add(new_category)
+        db.session.commit()
+        flash('Category was successfully added','alert-success')
+
+    return render_template('resources/add_category.html',form=form)

@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_restful import Api
 from resources import ResourceList, ResourceUpdate
 from resources import CategoryList, CategoryUpdate
-from views import list_resources
+from views import list_resources, add_resource, add_category
 
 # Blueprint aids in creating a modular application. This blueprint can be
 # imported and added to our main app so all of the resources and url rules
@@ -22,3 +22,5 @@ resource_api.add_resource(CategoryUpdate,'/api/categories/<int:id>')
 
 # Template Views
 resources_blueprint.add_url_rule('',view_func=list_resources)
+resources_blueprint.add_url_rule('/add',view_func=add_resource,methods=['POST','GET'])
+resources_blueprint.add_url_rule('/category/add',view_func=add_category,methods=['POST','GET'])

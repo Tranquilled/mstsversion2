@@ -42,6 +42,15 @@ class User(UserMixin, db.Model):
     def verify_password(self,password):
         return check_password_hash(self.password_hash, password)
 
+    def is_admin(self):
+        return self.role == TYPES[1][0]
+
+    def is_user(self):
+        return self.role == TYPES[0][0]
+
+    def is_superadmin(self):
+        return self.role == TYPES[2][0]
+
 
 @login_manager.user_loader
 def load_user(user_id):

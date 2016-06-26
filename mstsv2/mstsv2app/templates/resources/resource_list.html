@@ -8,6 +8,9 @@
 .transition{
     opacity:0;
 }
+.glyphicon{
+  margin-right:8px;
+}
 </style>
 {% endblock %}
 
@@ -19,16 +22,38 @@
         <div id="main_title"><h1 class="page-header" style="display:inline">Resources</h1></div>
     </div>
 </div>
+
 <div class="container transition">
     <br />
     <br />
+    {% if current_user.is_authenticated %}
+      {% if current_user.is_admin() or current_user.is_superadmin() %}
+      <a href="{{ url_for('resources.add_resource') }}" class="btn btn-default">Add Resource</a>
+      <a href="{{ url_for('resources.add_category') }}" class="btn btn-default">Add Category</a>
+      <br />
+      <br />
+      {% endif %}
+    {% endif %}
     <div class="row">
       <div class="col-md-12">
             {% for category in resources_by_category %}
               <h2>{{ resources_by_category[category].category }}</h2>
               <ul class="list-group">
               {% for resource in resources_by_category[category].resources %}
-                <li class="list-group-item"><a href="{{ resource.url }}">{{ resource.title }}</a></li>
+                <li class="list-group-item"><a href="{{ resource.url }}">{{ resource.title }}</a>
+                  {#{% if current_user.is_admin() or current_user.is_superadmin() %}#}
+                    <a class='pull-right' href=''><span class="glyphicon glyphicon-trash"></span></a>
+                    <a class='pull-right' href=''><span class="glyphicon glyphicon-pencil"></span></a>
+                  {#{% endif %}#}
+                  {% if resource.description %}
+                    <a class='pull-right' role="button" data-toggle="collapse" href="#{{ resource.id }}Resource" aria-expanded="false" aria-controls="{{ resource.id }}Resource">
+                      <span class="glyphicon glyphicon-arrow-down"></span>
+                    </a>
+                    <div class="collapse" id="{{ resource.id }}Resource">
+                      {{ resource.description }}
+                    </div>
+                  {% endif %}
+                </li>
               {% endfor %}
               </ul>
             {% endfor %}

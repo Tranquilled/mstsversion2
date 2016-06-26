@@ -18,9 +18,6 @@ There implementations are below. Schemas from the schema file are used
 to filter data. Models are used to interact with the database.
 
 '''
-
-
-
 from flask_restful import Resource as RESTResource
 from flask import request, make_response, jsonify
 from models import Resource, Category

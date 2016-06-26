@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% from 'render_field.html' import render_field_errors %}
+{% block subtitle %} Resources {% endblock %}
+
+
+{% block css %}
+<style type="text/css">
+.transition{
+    opacity:0;
+}
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container transition">
+    <div class="row">
+        <div id="main_title"><h1 class="page-header" style="display:inline">Add Resource</h1></div>
+    </div>
+</div>
+<div class="container transition">
+    <br />
+    <br />
+    <div class='row'>
+      <div class="col-md-8 col-md-offset-2">
+        <form method='POST' action=''>
+          {{ form.hidden_tag() }}
+
+          <label>{{ form.title.label }}</label>
+          {{ render_field_errors(form.title) }}
+          {{ form.title(class='form-control') }}
+          <br />
+
+          <label>{{ form.category.label }}</label>
+          {{ render_field_errors(form.category) }}
+          {{ form.category(class='form-control') }}
+          <br />
+
+          <label>{{ form.description.label }}</label>
+          {{ render_field_errors(form.description) }}
+          {{ form.description(class='form-control') }}
+          <br />
+
+          <label>{{ form.url.label }}</label>
+          {{ render_field_errors(form.url) }}
+          {{ form.url(class='form-control') }}
+          <br />
+
+          {{ form.submit(class='btn btn-default') }}
+        </form>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="{{ url_for('static',filename='js/jquery.transit.min.js')}}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.transition').transition({opacity:1});
+});
+</script>
+{% endblock %}

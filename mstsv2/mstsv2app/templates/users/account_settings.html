@@ -36,12 +36,12 @@
               <table class="table table-responsive">
                 <tbody>
                   <tr>
-                    <td>Account Status</td>
-                    <td>{{ current_user.role }}</td>
-                  </tr>
-                  <tr>
                     <td>Auto Generated Avatar</td>
                     <td><img src="{{ current_user.email|gravatar }}"></img></td>
+                  </tr>
+                  <tr>
+                    <td>Account Status</td>
+                    <td>{{ current_user.role }}</td>
                   </tr>
                 </tbody>
               </table>
