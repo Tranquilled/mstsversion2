@@ -2,6 +2,7 @@ from models import Resource, Category, db
 from flask import render_template, jsonify, redirect,url_for, request, flash
 from flask_login import current_user, login_required
 from forms import ResourceForm, CategoryForm
+import requests
 
 def list_resources():
     # getting all of the categories
@@ -21,6 +22,7 @@ def list_resources():
     for academic_resource in academic_resources:
         categories_display[academic_resource.category]["resources"].append(
             {
+                'id':academic_resource.id,
                 "title":academic_resource.title,
                 "url":academic_resource.url,
                 "description":academic_resource.description
@@ -30,10 +32,10 @@ def list_resources():
 @login_required
 def add_resource():
     # if not (current_user.is_admin() or current_user.is_superadmin()):
-        # return redirect(url_for('main.homepage'))
+    #     return redirect(url_for('main.homepage'))
 
     form = ResourceForm(request.form)
-    
+
     # Categories
     categories = Category.query.all()
     cat_choices = [ (category.id,category.name) for category in categories]
@@ -51,6 +53,25 @@ def add_resource():
     return render_template('resources/add_resource.html',form=form)
 
 @login_required
+def modify_resource(id):
+    pass
+
+
+@login_required
+def delete_resource(id):
+    # if not (current_user.is_admin() or current_user.is_superadmin()):
+    #     return redirect(url_for('main.homepage'))
+    try:
+        resource = Resource.query.get_or_404(id)
+        db.session.delete(resource)
+        db.session.commit()
+        flash('Resource successfully deleted','alert-success')
+    except SQLAlchemyError as e:
+        flash('Resource was not successfully deleted','alert-danger')
+    return redirect(url_for('list_resources'))
+
+
+@login_required
 def add_category():
     # if not (current_user.is_admin() or current_user.is_superadmin()):
     #     return redirect(url_for('main.homepage'))
@@ -63,3 +84,22 @@ def add_category():
         flash('Category was successfully added','alert-success')
 
     return render_template('resources/add_category.html',form=form)
+
+@login_required
+def modify_category(id):
+    # if not (current_user.is_admin() or current_user.is_superadmin()):
+    #     return redirect(url_for('main.homepage'))
+    pass
+@login_required
+def delete_category(id):
+    # if not (current_user.is_admin() or current_user.is_superadmin()):
+    #     return redirect(url_for('main.homepage'))
+
+    try:
+        category = Category.query.get_or_404(id)
+        db.session.delete(category)
+        db.session.commit()
+        flash('Category Successfully deleted','alert-success')
+    except SQLAlchemyError as e:
+        flash('Category unsuccessfully deleted','alert-danger')
+    return redirect(url_for('list_resources'))
